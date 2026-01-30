@@ -1,16 +1,25 @@
 {
   "name": "@clawdbot/dingtalk",
   "version": "2.0.0",
-  "description": "DingTalk (钉钉) channel plugin for Clawdbot",
-  "main": "index.ts",
+  "description": "DingTalk (钉钉) channel plugin for Clawdbot (and OpenClaw-compatible packaging)",
+  "main": "dist/index.js",
   "type": "module",
+  "files": [
+    "dist",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepack": "npm run build",
     "type-check": "tsc --noEmit",
     "lint": "eslint index.ts src/",
     "lint:fix": "eslint --fix index.ts src/ && prettier --write index.ts src/"
   },
   "keywords": [
     "clawdbot",
+    "openclaw",
     "dingtalk",
     "channel",
     "stream",
@@ -31,6 +40,11 @@
     "eslint-config-prettier": "^9.0.0",
     "prettier": "^3.0.0",
     "typescript": "^5.3.0"
+  },
+  "openclaw": {
+    "extensions": [
+      "./dist/index.js"
+    ]
   },
   "clawdbot": {
     "extensions": [
