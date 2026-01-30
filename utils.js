@@ -32,7 +32,7 @@ export function maskSensitiveData(data) {
     }
     maskObj(masked);
     return masked;
-}
+} 
 /**
  * Cleanup orphaned temp files from dingtalk media
  * Run at startup to clean up files from crashed processes
