@@ -4,7 +4,8 @@ import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as os from 'node:os';
 import { randomUUID } from 'node:crypto';
-import type { ClawdbotConfig } from 'clawdbot/plugin-sdk';
+import { createRequire } from 'node:module';
+import type { ClawdbotConfig } from 'openclaw/plugin-sdk';
 import { maskSensitiveData, cleanupOrphanedTempFiles, retryWithBackoff } from '../utils';
 import { getDingTalkRuntime } from './runtime';
 import { DingTalkConfigSchema } from './config-schema.js';
@@ -28,16 +29,24 @@ import type {
   CardInstance,
 } from './types';
 
-// Use dynamic require to get buildChannelConfigSchema (avoids TS type resolution issues)
+const require = createRequire(import.meta.url);
+
+// Use dynamic require to get buildChannelConfigSchema (handles OpenClaw/Clawdbot)
 // The actual runtime will load this successfully via ESM interop
 let dingtalkConfigSchema: any;
 try {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { buildChannelConfigSchema } = require('clawdbot/plugin-sdk');
+  const { buildChannelConfigSchema } = require('openclaw/plugin-sdk');
   dingtalkConfigSchema = buildChannelConfigSchema(DingTalkConfigSchema);
 } catch {
-  // Fallback if require fails - shouldn't happen in normal operation
-  dingtalkConfigSchema = {};
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { buildChannelConfigSchema } = require('clawdbot/plugin-sdk');
+    dingtalkConfigSchema = buildChannelConfigSchema(DingTalkConfigSchema);
+  } catch {
+    // Fallback if require fails - shouldn't happen in normal operation
+    dingtalkConfigSchema = {};
+  }
 }
 
 // Access Token cache

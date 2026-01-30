@@ -1,4 +1,4 @@
-import type { ClawdbotPluginApi } from 'clawdbot/plugin-sdk';
+import type { ClawdbotPluginApi } from 'openclaw/plugin-sdk';
 import { dingtalkPlugin, dingtalkConfigSchema } from './src/channel';
 import { setDingTalkRuntime } from './src/runtime';
 

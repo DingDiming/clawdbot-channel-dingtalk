@@ -9,7 +9,7 @@
  * - Session and token management
  */
 
-import type { ClawdbotConfig } from 'clawdbot/plugin-sdk';
+import type { ClawdbotConfig } from 'openclaw/plugin-sdk';
 
 /**
  * DingTalk channel configuration (extends base Clawdbot config)

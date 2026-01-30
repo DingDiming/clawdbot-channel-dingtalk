@@ -1,14 +1,23 @@
 {
   "name": "@clawdbot/dingtalk",
   "version": "2.0.0",
-  "description": "DingTalk (钉钉) channel plugin for Clawdbot (and OpenClaw-compatible packaging)",
-  "main": "dist/index.js",
+  "description": "DingTalk (钉钉) channel plugin for OpenClaw (formerly Clawdbot)",
+  "main": "index.js",
   "type": "module",
   "files": [
-    "dist",
+    "index.js",
+    "index.d.ts",
+    "index.js.map",
+    "utils.js",
+    "utils.d.ts",
+    "utils.js.map",
+    "src",
+    "clawdbot.plugin.json",
+    "openclaw.plugin.json",
     "package.json",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "plugin-sdk.d.ts"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -43,12 +52,7 @@
   },
   "openclaw": {
     "extensions": [
-      "./dist/index.js"
-    ]
-  },
-  "clawdbot": {
-    "extensions": [
-      "./index.ts"
+      "./index.js"
     ],
     "channels": [
       "dingtalk"
@@ -69,7 +73,34 @@
     },
     "install": {
       "npmSpec": "@clawdbot/dingtalk",
-      "localPath": "extensions/dingtalk-channel",
+      "localPath": "extensions/dingtalk",
+      "defaultChoice": "local"
+    }
+  },
+  "clawdbot": {
+    "extensions": [
+      "./index.js"
+    ],
+    "channels": [
+      "dingtalk"
+    ],
+    "installDependencies": true,
+    "channel": {
+      "id": "dingtalk",
+      "label": "DingTalk",
+      "selectionLabel": "DingTalk (钉钉)",
+      "docsPath": "/channels/dingtalk",
+      "docsLabel": "dingtalk",
+      "blurb": "钉钉企业内部机器人，使用 Stream 模式，无需公网 IP。",
+      "order": 70,
+      "aliases": [
+        "dd",
+        "ding"
+      ]
+    },
+    "install": {
+      "npmSpec": "@clawdbot/dingtalk",
+      "localPath": "extensions/dingtalk",
       "defaultChoice": "local"
     }
   }
